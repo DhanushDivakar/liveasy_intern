@@ -1,4 +1,3 @@
-import 'package:fl_country_code_picker/fl_country_code_picker.dart';
 import 'package:flutter/material.dart';
 
 class phoneAuth extends StatefulWidget {
@@ -9,8 +8,7 @@ class phoneAuth extends StatefulWidget {
 }
 
 class _phoneAuthState extends State<phoneAuth> {
-  final countryPicker = const FlCountryCodePicker();
-  CountryCode? countryCode;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,40 +58,35 @@ class _phoneAuthState extends State<phoneAuth> {
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          GestureDetector(
-                            onTap: () async{
-                             final code =  await countryPicker.showPicker(context: context);
-                             setState(() {
-                               countryCode = code;
-                             });
-                            },
-                            child: Row(
-                              children: [
-                                Container(
-                                  child: countryCode!=null ? countryCode!.flagImage : null,
-                                ),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                Container(
+                          Row(
+                            children: [
+                              Container(
+                                child: Image.asset('assets/india 2.png'),
+                              ),
 
-                                  child: Text(
-                                    countryCode?.dialCode ?? "+1",
-                                    style: TextStyle(
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Container(
 
-                                    color: Colors.black,
-                                      fontSize: 22
-                                  ),),
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Text("-",
-                                style: TextStyle(
-                                  fontSize: 22
-                                ),)
-                              ],
-                            ),
+                                child: Text(
+                                  "+91",
+
+                                  // countryCode?.dialCode ?? "+1",
+                                  style: TextStyle(
+
+                                  color: Colors.black,
+                                    fontSize: 22
+                                ),),
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text("-",
+                              style: TextStyle(
+                                fontSize: 22
+                              ),)
+                            ],
                           )
                         ],
                       ),
