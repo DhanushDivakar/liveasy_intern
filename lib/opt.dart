@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:liveasy_in/home.dart';
 
 //D
 class otp extends StatefulWidget {
@@ -10,6 +12,34 @@ class otp extends StatefulWidget {
 }
 
 class _otpState extends State<otp> {
+  String? verificationId;
+  bool showLoading = false;
+
+  final otpController = TextEditingController();
+  FirebaseAuth _auth = FirebaseAuth.instance;
+
+  void signInWithPhoneAuthCredential(PhoneAuthCredential phoneAuthCredential) async{
+    setState(() {
+      showLoading = true;
+    });
+    try {
+      final authCredential = await _auth.signInWithCredential(phoneAuthCredential);
+      setState(() {
+        showLoading = false;
+      });
+      if(authCredential?.user != null){
+        Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+      }
+    } on FirebaseAuthException catch (e) {
+      setState(() {
+        showLoading = false;
+      });
+
+    }
+
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -92,7 +122,10 @@ class _otpState extends State<otp> {
                 height: 50,
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    PhoneAuthCredential phoneAuthCredential = PhoneAuthProvider.credential(verificationId: verificationId!, smsCode: otpController.text);
+                    signInWithPhoneAuthCredential(phoneAuthCredential);
+                  },
                   style: ButtonStyle(
                     foregroundColor:
                         MaterialStateProperty.all<Color>(Colors.white),
@@ -130,6 +163,8 @@ class _otpState extends State<otp> {
   }
 
   _textFieldOTP({bool? first, last}) {
+    final otpController = TextEditingController();
+
     return Container(
       color: Color.fromRGBO(147, 210, 243, 1),
       height: 60,
@@ -137,6 +172,7 @@ class _otpState extends State<otp> {
       child: AspectRatio(
         aspectRatio: 0.9,
         child: TextField(
+          controller: otpController,
           autofocus: true,
           onChanged: (value) {
             if (value.length == 1 && last == false) {
@@ -168,3 +204,6 @@ class _otpState extends State<otp> {
     );
   }
 }
+final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+
+
