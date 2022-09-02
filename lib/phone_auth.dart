@@ -126,9 +126,10 @@ class _phoneAuthState extends State<phoneAuth> {
                       onPressed: () async {
                         setState(() {
                           showLoading = true;
+                          CircularProgressIndicator();
                         });
                         await _auth.verifyPhoneNumber(
-                            phoneNumber: phoneController.text,
+                            phoneNumber: "+91" + phoneController.text,
                             verificationCompleted: (phoneAuthCredential) async {
                               setState(() {
                                 showLoading = false;

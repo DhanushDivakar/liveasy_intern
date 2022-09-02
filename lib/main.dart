@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:liveasy_in/first_page.dart';
 import 'package:liveasy_in/phone_auth.dart';
 
 void main() async{
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
 debugShowCheckedModeBanner: false,
-      home: const phoneAuth(),
+      home:  phoneAuth(),
     );
   }
 }
